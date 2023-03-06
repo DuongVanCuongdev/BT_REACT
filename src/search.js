@@ -13,6 +13,8 @@ import { useState, useEffect } from "react";
 
 export default function Search({ navigation }) {
   const [listCustomer, setListCustomer] = useState();
+  const [listSearch, setListSearch] = useState();
+  const [textSearch, setTextSearch] = useState();
   const [loading, setLoading] = useState(false)
 
 
@@ -20,24 +22,37 @@ export default function Search({ navigation }) {
   
 
 
-  const getListCustomer = async (text) => {
+  const getListCustomer = async () => {
 
     setLoading(true)
 
     await fetch(
-      "https://api.themoviedb.org/3/search/keyword?api_key=e9e9d8da18ae29fc430845952232787c&page=1&query=" +
-        text
+      "https://60c7a3edafc88600179f5766.mockapi.io/listPhone"
     )
       .then((response) => response.json())
       .then((json) => {
           setLoading(false)
-        setListCustomer(json.results);
+        setListCustomer(json);
         console.log("list", listCustomer);
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  const searchResult = async(name) => {
+    const newLists = new Array()
+    const newList = new Array()
+    listCustomer.forEach(element => {
+     if (element.name.includes(name) && name != "") {
+       console.log("==", name);
+       newLists.push(element)
+     } else if (name == "" && !element.name.includes(name)){
+       newLists(newList)
+     }
+    })
+    setListSearch(newLists)
+  }
 
   useEffect(() => {
     getListCustomer();
@@ -94,7 +109,8 @@ export default function Search({ navigation }) {
             placeholder="Tìm kiếm sản phẩm"
             placeholderTextColor="#808080"
             onChangeText={(text) => {
-              getListCustomer(text);
+              searchResult(text);
+              setTextSearch(text);
             }}
           />
         </View>
@@ -105,8 +121,10 @@ export default function Search({ navigation }) {
       {loading?  <ActivityIndicator style={{marginTop: 20, justifyContent:'center'}} />: null}
         <FlatList
 
-          data={listCustomer}
-          renderItem={({ item }) => (
+          data={listSearch}
+          renderItem={({ item }) => {
+            const partialText = item.name.split(textSearch)
+            return (
             <View style={{
                 flexDirection: "colum",
                 padding: 10,
@@ -116,14 +134,21 @@ export default function Search({ navigation }) {
                 shadowColor: "#000",
                 shadowOpacity: 0.3,
                 shadowRadius: 20,
-
               }}>
-                  <Text style={{ fontSize: 25, fontWeight: "700"}}>{item.name}</Text>
+                  <Text style={{ fontSize: 25, fontWeight: "700"}}>{partialText.map((part, index) => {
+                    return(
+                      <Text key={index}>
+                        {part}
+                        {index !== partialText.length - 1 && <Text style={{color: 'blue', fontWeight: '900'}}>{textSearch}</Text>}
+                      </Text>
+                    )
+                  })}</Text>
 
               <Text style={{ fontSize: 25, fontWeight: "500", color:'red'}}>{new Intl.NumberFormat('vi-VN', config).format(item.id)}</Text>
               
             </View>
-          )}
+            )
+          }}
           keyExtractor={(item) => item.id}
         />
       </View>

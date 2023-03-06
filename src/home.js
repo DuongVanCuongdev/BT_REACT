@@ -10,14 +10,15 @@ import {
   FlatList,
   TouchableOpacity
 } from "react-native";
-import avatar from "../src/asset/TechStore.png";
+// import avatar from "../src/asset/TechStore.png";
 
 export default function Home({ navigation }) {
-  const [isShowImagge, setIsShowImage] = useState(true);
+  // const [isShowImagge, setIsShowImage] = useState(true);
 
-  const [list, setList] = useState(dataDanhMuc);
+  // const [list, setList] = useState(dataDanhMuc);
 
   const [listCustomer, setListCustomer] = useState();
+  
 
   const getListCustomer = async () => {
     await fetch("https://60c7a3edafc88600179f5766.mockapi.io/listPhone")
@@ -133,7 +134,6 @@ export default function Home({ navigation }) {
                   placeholderTextColor="#808080"
                   onChangeText={() => {}}
                   onFocus={() => {navigation.navigate('Search')}}
-                
                 />
               </View>
             </View>

@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
+// import { create, createStore } from "zustand";
 import {
   StyleSheet,
   Text,
@@ -9,7 +10,9 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import avatar from "../src/asset/TechStore.png";
+import cartStore from "./cartStore";
+
+
 
 export default function Cart({ navigation }) {
   const [listProduct, setListProduct] = useState();
@@ -17,6 +20,12 @@ export default function Cart({ navigation }) {
   const [total, setTotal] = useState();
   const [check, setCheck] = useState(false)
 
+  const count = cartStore(state => state.count);
+  const addCount = cartStore(state => state.addCount);
+  const subtractCount = cartStore(state => state.subtractCount);
+
+  const listCartP = cartStore(state => state.listProducCart)
+  const listttt = cartStore(state => state.list);
 
   const getListProduct = async () => {
     await fetch("https://60c7a3edafc88600179f5766.mockapi.io/w")
@@ -24,6 +33,9 @@ export default function Cart({ navigation }) {
       .then((json) => {
         setListProduct(json);
         // console.log("list", listProduct);
+        listCartP(json)
+        console.log(listttt);
+
         setNumber(json.length)
         let amountOfMoney = 0
         let money = 0
@@ -155,16 +167,15 @@ export default function Cart({ navigation }) {
   //   } else { 
   //     setTotal(0)
   //   }
-    
   // }
 
-  const QuantityBuy = 0
-  function addition(){
-    for (let i = 0; i < listProduct.length; i++){
+  // const QuantityBuy = 0
+  // function addition(){
+  //   for (let i = 0; i < listProduct.length; i++){
       
-      console.log(listProduct[i].price);
-    }
-  }
+  //     console.log(listProduct[i].price);
+  //   }
+  // }
 
 
 
@@ -214,6 +225,7 @@ export default function Cart({ navigation }) {
         >
           Giỏ hàng của tôi
         </Text>
+        <Text>{count}</Text>
       </View>
       <Text
         style={{
@@ -265,7 +277,7 @@ export default function Cart({ navigation }) {
 
       <View style={{ flex: 1.5 , flexDirection: 'row', alignItems: 'center'}}>
         <Text style={{flex: 1,fontSize: 20, fontWeight: '700', marginLeft: 30}}>Tổng cộng: {new Intl.NumberFormat("vi-VN", config).format(total)}</Text>
-        <TouchableOpacity style={{flex: 1 ,backgroundColor: '#00ABFD', alignItems:'center', padding: 10, borderRadius: 20}}><Text style={{fontSize: 20, fontWeight: '500'}}>Thanh toán</Text></TouchableOpacity>
+        <TouchableOpacity style={{flex: 1 ,backgroundColor: '#00ABFD', alignItems:'center', padding: 10, borderRadius: 20}} onPress={() => addCount()}><Text style={{fontSize: 20, fontWeight: '500'}} >Thanh toán</Text></TouchableOpacity>
       </View>
     </View>
   );
