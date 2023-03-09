@@ -39,13 +39,11 @@ export default function ListFriend({ navigation }) {
                 flexDirection: "row",
                 padding: 20,
                 backgroundColor: "#fff",
-                //   margin: 15,
-                //   borderRadius: 10,
                 alignItems: "center",
-                //   borderTopColor: 'red'
                 borderWidth: 1,
                 borderTopColor: "#CCCCCC",
               }}
+              onPress={() => navigation.navigate('Chat')}
             >
               <Image
                 style={{ width: 60, height: 60, borderRadius: 100 }}
