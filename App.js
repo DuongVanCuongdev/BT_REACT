@@ -9,6 +9,7 @@ import Splash from "./src/splash";
 import Tabbar from "./src/Tabbar";
 import Search from "./src/search";
 import InfoProduct from "./src/infoProduct";
+import Chat from "./src/chat";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,11 @@ const App = () => {
         <Stack.Screen
           name="InfoProduct"
           component={InfoProduct}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={Chat}
           options={{ headerShown: false }}
         />
         
