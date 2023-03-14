@@ -9,6 +9,7 @@ import Cart from "./cart";
 import Account from "./account";
 import ListFriend from "./listFirend";
 import Chat from "./chat";
+import Vote from "./vote";
 
 
 const Tab = createBottomTabNavigator();
@@ -32,6 +33,8 @@ const Tabbar = () => {
                 <Tab.Screen name="Cart" component={Cart} options={{ headerShown: false }}/>
                 <Tab.Screen name="Account" component={Account} options={{ headerShown: false }}/>
                 <Tab.Screen name="List Friend" component={ListFriend} options={{ headerShown: false }}/>
+                <Tab.Screen name="Vote" component={Vote} options={{ headerShown: false }}/>
+
                 {/* <Tab.Screen name="Chat" component={Chat} /> */}
               </Tab.Navigator>
           );
